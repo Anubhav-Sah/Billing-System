@@ -4,7 +4,7 @@
 <p>A simple console-based restaurant billing system implemented in C. This project is designed to help users manage orders and generate invoices for a restaurant setting. The system allows for adding and deleting items, calculating total amounts, and printing detailed invoices with customer and transaction details, option to save it in local disk</p>
 
 <h2>Purpose:</h2>
-<p>This project serves as my first venture into building practical applications with C, focusing on fundamental programming concepts such as data structures (doubly linked lists), control structures, and basic input/output operations.</p>
+<p>This project serves as my first venture into building practical applications with C, focusing on fundamental programming concepts such as data structures (doubly linked lists), control structures, file handaling,and basic input/output operations.</p>
 
 <h2>Features:</h2>
 
