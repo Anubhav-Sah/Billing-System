@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
@@ -62,23 +63,6 @@ void delete_a_item()
     }
 }
 
-void content()
-{
-    int count=1;
-    temp=head;
-    while(temp->next!=0)
-    {
-        printf("\t%d      \t\t%s      \t%d      \t%d       \t%d    \n",count++,temp->item_name,temp->rate,temp->quantity,temp->amount);
-
-        temp=temp->next;
-    }
-    printf("\t%d      \t\t%s      \t%d      \t%d       \t%d    \n",count++,temp->item_name,temp->rate,temp->quantity,temp->amount);
-
-}
-
-
-
-
 void header(char* invoice_no , char* name,char* address, char* date)
 {
     printf("Enter the amount given by custumer :- ");
@@ -93,13 +77,65 @@ void header(char* invoice_no , char* name,char* address, char* date)
     printf("\tSl.no.  \tItem    \tRate    \tQuantity\tAmount\n");
 }
 
-void footer(int total,int cash_given,int cash_returned)
+
+
+void content()
+{
+    int count=1;
+    temp=head;
+    while(temp->next!=0)
+    {
+        printf("\t%d      \t\t%s     \t%d     \t%d       \t%d    \n",count++,temp->item_name,temp->rate,temp->quantity,temp->amount);
+
+        temp=temp->next;
+    }
+    printf("\t%d      \t\t%s      \t%d      \t%d       \t%d    \n",count++,temp->item_name,temp->rate,temp->quantity,temp->amount);
+
+}
+
+
+
+void footer()
 {
     printf("\n\t\t<------------------------------------------------------------->\n\n");
-    printf("\tToatal        :- \t\t\t\t\t\t%d\n",total);
+    printf("\tTotal        :- \t\t\t\t\t\t%d\n",total);
     printf("\tCash Given    :- \t\t\t\t\t\t%d\n",cash_given);
     printf("\tCash Returned :- \t\t\t\t\t\t%d\n",cash_returned);
     printf("\n\t===========================Thank you Visit again! ==========================\n\n\n\n\n\n");
+}
+int print_invoice(char* invoice_no , char* name,char* address, char* date)
+{
+    FILE *file =fopen("Invoice.txt","a");
+    if(file==NULL)
+    {
+        printf("Error opening the file!\n");
+        return 0;
+    }
+    fprintf(file,"\n\t==============================SAH'S RESTURENT==============================\n\n");
+    fprintf(file,"\tInvoice no :- %s\t\t\t\t\tDate :- %s\n",invoice_no,date);
+    fprintf(file,"\tName :- %s\n",name);
+    fprintf(file,"\tAddress :- %s\n",address);
+    fprintf(file,"\t\t<------------------------------------------------------------->\n\n");
+    fprintf(file,"\tSl.no.  \tItem    \tRate    \tQuantity\tAmount\n");
+
+    int count=1;
+    temp=head;
+    while(temp->next!=0)
+    {
+        fprintf(file,"\t%d      \t\t%s     \t%d     \t%d       \t%d    \n",count++,temp->item_name,temp->rate,temp->quantity,temp->amount);
+
+        temp=temp->next;
+    }
+    fprintf(file,"\t%d      \t\t%s      \t%d      \t%d       \t%d    \n",count++,temp->item_name,temp->rate,temp->quantity,temp->amount);
+
+    fprintf(file,"\n\t\t<------------------------------------------------------------->\n\n");
+    fprintf(file,"\tTotal        :- \t\t\t\t\t\t%d\n",total);
+    fprintf(file,"\tCash Given    :- \t\t\t\t\t\t%d\n",cash_given);
+    fprintf(file,"\tCash Returned :- \t\t\t\t\t\t%d\n",cash_returned);
+    fprintf(file,"\n\t===========================Thank you Visit again! ==========================\n\n\n\n\n\n");
+    fclose(file);
+    printf("Invoice Saved Succesfully !");
+    return (1);
 }
 
 int main()
@@ -119,7 +155,8 @@ int main()
     {
         printf("Enter 1 to add a item \n");
         printf("Enter 2 to delete the item \n");
-        printf("Enter 3 to print the Item\n");
+        printf("Enter 3 to print the invoice without saving\n");
+        printf("Enter 4 to print and save the invoice\n");
         printf("Enter the choice :- ");
         scanf("%d",&choice);
         switch(choice)
@@ -133,12 +170,16 @@ int main()
     case 3:
         header(invoice_no ,name,address,date);
         content();
-        footer(total,cash_given,cash_returned);
+        footer();
+        return 0;
+    case 4:
+        header(invoice_no ,name,address,date);
+        content();
+        footer();
+        print_invoice(invoice_no ,name,address,date);
         return 0;
     default:
         printf("Enter the value correctly\n");
         }
     }
 }
-
-
